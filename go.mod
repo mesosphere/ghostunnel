@@ -36,6 +36,7 @@ require (
 	github.com/github/smimesign v0.2.0
 	github.com/open-policy-agent/opa v0.44.0
 	github.com/pkg/errors v0.9.1
+	golang.org/x/net v0.7.0
 	google.golang.org/protobuf v1.28.1
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
@@ -144,7 +145,6 @@ require (
 	go.uber.org/zap v1.23.0 // indirect
 	golang.org/x/crypto v0.0.0-20220919173607-35f4265a4bc0 // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
-	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/oauth2 v0.0.0-20220909003341-f21342109be1 // indirect
 	golang.org/x/text v0.7.0 // indirect
 	golang.org/x/time v0.0.0-20220920022843-2ce7c2934d45 // indirect
