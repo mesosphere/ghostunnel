@@ -731,7 +731,7 @@ func (context *Context) serveStatus() error {
 
 // Get backend dialer function in server mode (connecting to a unix socket or tcp port)
 func serverBackendDialer() (func() (net.Conn, error), error) {
-	backendNet, backendAddr, _, err := socket.ParseAddress(*serverForwardAddress, false)
+	backendNet, backendAddr, _, err := socket.ParseAddress(*serverForwardAddress, true)
 	if err != nil {
 		return nil, err
 	}
