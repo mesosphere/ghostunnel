@@ -12,10 +12,10 @@ FROM golang:1.22-alpine as build
 RUN apk add --no-cache --update gcc musl-dev libtool make git
 
 # Copy source
-COPY . /go/src/github.com/ghostunnel/ghostunnel
+COPY . /go/src/github.com/mesosphere/ghostunnel
 
 # Build
-RUN cd /go/src/github.com/ghostunnel/ghostunnel && \
+RUN cd /go/src/github.com/mesosphere/ghostunnel && \
     GO111MODULE=on make clean ghostunnel && \
     cp ghostunnel /usr/bin/ghostunnel
 

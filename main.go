@@ -44,6 +44,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	metrics "github.com/rcrowley/go-metrics"
 	sqmetrics "github.com/square/go-sq-metrics"
+	netproxy "golang.org/x/net/proxy"
 
 	prometheusmetrics "github.com/deathowl/go-metrics-prometheus"
 	"github.com/prometheus/client_golang/prometheus"
@@ -778,13 +779,16 @@ func (context *Context) serveStatus() error {
 
 // Get backend dialer function in server mode (connecting to a unix socket or tcp port)
 func serverBackendDialer() (func() (net.Conn, error), error) {
-	backendNet, backendAddr, _, err := socket.ParseAddress(*serverForwardAddress, false)
+	backendNet, backendAddr, _, err := socket.ParseAddress(*serverForwardAddress, true)
 	if err != nil {
 		return nil, err
 	}
 
 	return func() (net.Conn, error) {
-		return net.DialTimeout(backendNet, backendAddr, *timeoutDuration)
+		proxyDialer := netproxy.FromEnvironmentUsing(&net.Dialer{
+			Timeout: *timeoutDuration,
+		})
+		return proxyDialer.Dial(backendNet, backendAddr)
 	}, nil
 }
 
