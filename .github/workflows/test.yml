@@ -1,5 +1,5 @@
 ---
-name: Test 
+name: Test
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
         run: make ghostunnel
       - name: Run tests
         run: make unit
-      
+
   integration-linux:
     name: Integration tests (Linux)
     strategy:
@@ -38,20 +38,9 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-      - name: Run tests 
+      - name: Run tests
         run: GO_VERSION=${{ matrix.version }} make docker-test
-      - name: Codecov upload
-        uses: codecov/codecov-action@v4
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        with:
-          files: ./coverage/all.profile
-          flags: linux
-          fail_ci_if_error: true
-          verbose: true
-          token: ${{ secrets.CODECOV_TOKEN }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-    
+
   integration-darwin:
     name: Integration tests (Darwin)
     strategy:
@@ -75,14 +64,3 @@ jobs:
         uses: actions/checkout@v4
       - name: Run tests
         run: make test
-      - name: Codecov upload
-        uses: codecov/codecov-action@v4
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        with:
-          files: ./coverage/all.profile
-          flags: darwin
-          fail_ci_if_error: true
-          verbose: true
-          token: ${{ secrets.CODECOV_TOKEN }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
